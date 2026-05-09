@@ -27,11 +27,11 @@ app.add_middleware(
 # ─── CONEXIÓN A BASE DE DATOS ──────────────────────────
 def get_db():
     return pymysql.connect(
-        host="localhost",
-        user="root",
-        password="",
-        database="minimarket_g2",
-        port=3306,
+        host=os.getenv("DB_HOST", "localhost"),
+        user=os.getenv("DB_USER", "root"),
+        password=os.getenv("DB_PASSWORD", ""),
+        database=os.getenv("DB_NAME", "minimarket_g2"),
+        port=int(os.getenv("DB_PORT", "3306")),
         cursorclass=pymysql.cursors.DictCursor
     )
 

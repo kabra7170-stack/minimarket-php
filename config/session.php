@@ -8,7 +8,7 @@ function isLoggedIn() {
 
 function requireLogin() {
     if (!isLoggedIn()) {
-        header('Location: /minimarket/login.php');
+        header('Location: /login.php');
         exit();
     }
 }
@@ -16,7 +16,7 @@ function requireLogin() {
 function requireRole($roles) {
     requireLogin();
     if (!in_array($_SESSION['rol'], (array)$roles)) {
-        header('Location: /minimarket/acceso_denegado.php');
+        header('Location: /acceso_denegado.php');
         exit();
     }
 }
@@ -37,7 +37,7 @@ function isClienteLoggedIn() {
 
 function requireCliente() {
     if (!isClienteLoggedIn()) {
-        header('Location: /minimarket/login.php?modo=cliente');
+        header('Location: /login.php?modo=cliente');
         exit();
     }
 }

@@ -210,7 +210,7 @@ function actualizarHora() {
 }
 
 function autoRefresh() {
-    fetch('/minimarket/api/dashboard_data.php')
+    fetch('/api/dashboard_data.php')
         .then(r => r.json())
         .then(d => {
             if (!d) return;

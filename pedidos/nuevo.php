@@ -95,7 +95,7 @@ $response = curl_exec($ch);
 $curl_error = curl_error($ch);
 curl_close($ch);
 
-file_put_contents('C:/Users/Deurys/Downloads/xampp/htdocs/minimarket/webhook_debug.txt', date('Y-m-d H:i:s') . " | Response: $response | Error: $curl_error\n", FILE_APPEND);
+file_put_contents('C:/Users/Deurys/Downloads/xampp/htdocs/webhook_debug.txt', date('Y-m-d H:i:s') . " | Response: $response | Error: $curl_error\n", FILE_APPEND);
 
 header("Location: ver.php?id=$pedido_id&ok=1");
 exit();

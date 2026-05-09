@@ -135,7 +135,7 @@ function checkNuevosMensajes() {
                     data.nuevos.forEach(m => {
                         new Notification('💬 Nuevo mensaje - MiniMarket G2', {
                             body: m.nombre + ': ' + m.mensaje.substring(0, 80),
-                            icon: '/minimarket/favicon.ico'
+                            icon: '/favicon.ico'
                         });
                     });
                 }

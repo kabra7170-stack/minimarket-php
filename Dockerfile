@@ -6,6 +6,8 @@ RUN apt-get update && apt-get install -y \
     libfreetype6-dev \
     && docker-php-ext-install pdo pdo_mysql mysqli
 
+RUN a2dismod mpm_event && a2enmod mpm_prefork
+
 COPY . /var/www/html/
 
 RUN chown -R www-data:www-data /var/www/html

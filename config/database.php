@@ -1,6 +1,12 @@
 <?php
 function getDB() {
-    $conn = new mysqli('localhost', 'Deurys', 'deurys092226..', 'minimarket_g2', 3306);
+    $host = getenv('DB_HOST') ?: 'mysql.railway.internal';
+    $user = getenv('DB_USER') ?: 'root';
+    $pass = getenv('DB_PASSWORD') ?: 'wMrTHmynRYxmWmnFuxndQpOQKSEQdMOc';
+    $db   = getenv('DB_NAME') ?: 'railway';
+    $port = getenv('DB_PORT') ?: 3306;
+
+    $conn = new mysqli($host, $user, $pass, $db, $port);
     if ($conn->connect_error) {
         die('Error de conexion: ' . $conn->connect_error);
     }

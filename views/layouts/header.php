@@ -2,8 +2,6 @@
 require_once __DIR__ . '/../../config/session.php';
 requireLogin();
 $user = currentUser();
-
-// Incluir funciones toast
 require_once __DIR__ . '/toast.php';
 ?>
 <!DOCTYPE html>
@@ -49,44 +47,44 @@ require_once __DIR__ . '/toast.php';
   <div class="sidebar-nav">
     <?php $self = $_SERVER['PHP_SELF']; ?>
     <div class="nav-section">Principal</div>
-    <a href="/minimarket/dashboard.php" class="<?= basename($self)=='dashboard.php'?'active':'' ?>"><i class="bi bi-speedometer2"></i> Dashboard</a>
+    <a href="/dashboard.php" class="<?= basename($self)=='dashboard.php'?'active':'' ?>"><i class="bi bi-speedometer2"></i> Dashboard</a>
 
     <div class="nav-section">Inventario</div>
-    <a href="/minimarket/productos/index.php" class="<?= strpos($self,'productos')!==false?'active':'' ?>"><i class="bi bi-box-seam"></i> Productos</a>
-    <a href="/minimarket/categorias/index.php" class="<?= strpos($self,'categorias')!==false?'active':'' ?>"><i class="bi bi-tags"></i> Categorías</a>
-    <a href="/minimarket/proveedores/index.php" class="<?= strpos($self,'proveedores')!==false?'active':'' ?>"><i class="bi bi-truck"></i> Proveedores</a>
-    <a href="/minimarket/compras/index.php" class="<?= strpos($self,'compras')!==false?'active':'' ?>"><i class="bi bi-cart-plus"></i> Compras</a>
+    <a href="/productos/index.php" class="<?= strpos($self,'productos')!==false?'active':'' ?>"><i class="bi bi-box-seam"></i> Productos</a>
+    <a href="/categorias/index.php" class="<?= strpos($self,'categorias')!==false?'active':'' ?>"><i class="bi bi-tags"></i> Categorías</a>
+    <a href="/proveedores/index.php" class="<?= strpos($self,'proveedores')!==false?'active':'' ?>"><i class="bi bi-truck"></i> Proveedores</a>
+    <a href="/compras/index.php" class="<?= strpos($self,'compras')!==false?'active':'' ?>"><i class="bi bi-cart-plus"></i> Compras</a>
 
     <div class="nav-section">Ventas</div>
-    <a href="/minimarket/ventas/index.php" class="<?= strpos($self,'ventas')!==false?'active':'' ?>"><i class="bi bi-bag-plus"></i> Ventas</a>
-    <a href="/minimarket/clientes/index.php" class="<?= strpos($self,'clientes')!==false?'active':'' ?>"><i class="bi bi-people"></i> Clientes</a>
+    <a href="/ventas/index.php" class="<?= strpos($self,'ventas')!==false?'active':'' ?>"><i class="bi bi-bag-plus"></i> Ventas</a>
+    <a href="/clientes/index.php" class="<?= strpos($self,'clientes')!==false?'active':'' ?>"><i class="bi bi-people"></i> Clientes</a>
 
     <div class="nav-section">Pedidos</div>
-    <a href="/minimarket/pedidos/nuevo.php" class="<?= basename($self)=='nuevo.php'&&strpos($self,'pedidos')!==false?'active':'' ?>"><i class="bi bi-bag-plus"></i> Nuevo Pedido</a>
-    <a href="/minimarket/pedidos/index.php?tipo=mostrador" class="<?= basename($self)=='index.php'&&strpos($self,'pedidos')!==false?'active':'' ?>"><i class="bi bi-list-check"></i> Pedidos Mostrador</a>
-    <a href="/minimarket/pedidos/index.php?tipo=domicilio"><i class="bi bi-bicycle"></i> Pedidos Domicilio</a>
+    <a href="/pedidos/nuevo.php" class="<?= basename($self)=='nuevo.php'&&strpos($self,'pedidos')!==false?'active':'' ?>"><i class="bi bi-bag-plus"></i> Nuevo Pedido</a>
+    <a href="/pedidos/index.php?tipo=mostrador" class="<?= basename($self)=='index.php'&&strpos($self,'pedidos')!==false?'active':'' ?>"><i class="bi bi-list-check"></i> Pedidos Mostrador</a>
+    <a href="/pedidos/index.php?tipo=domicilio"><i class="bi bi-bicycle"></i> Pedidos Domicilio</a>
 
     <div class="nav-section">Reportes</div>
-    <a href="/minimarket/reportes/ventas.php" class="<?= strpos($self,'reportes/ventas')!==false?'active':'' ?>"><i class="bi bi-bar-chart"></i> Reporte Ventas</a>
-    <a href="/minimarket/reportes/inventario.php" class="<?= strpos($self,'inventario')!==false?'active':'' ?>"><i class="bi bi-clipboard-data"></i> Reporte Inventario</a>
-    <a href="/minimarket/alertas/index.php" class="<?= strpos($self,'alertas')!==false?'active':'' ?>"><i class="bi bi-bell"></i> Alertas</a>
+    <a href="/reportes/ventas.php" class="<?= strpos($self,'reportes/ventas')!==false?'active':'' ?>"><i class="bi bi-bar-chart"></i> Reporte Ventas</a>
+    <a href="/reportes/inventario.php" class="<?= strpos($self,'inventario')!==false?'active':'' ?>"><i class="bi bi-clipboard-data"></i> Reporte Inventario</a>
+    <a href="/alertas/index.php" class="<?= strpos($self,'alertas')!==false?'active':'' ?>"><i class="bi bi-bell"></i> Alertas</a>
 
     <div class="nav-section">Comunicación</div>
-<a href="/minimarket/mensajes/index.php" class="<?= strpos($self,'mensajes')!==false?'active':'' ?>">
-    <i class="bi bi-chat-dots"></i> Mensajes
-    <?php
-    $db_menu = getDB();
-    $no_leidos_menu = $db_menu->query("SELECT COUNT(*) AS t FROM mensajes WHERE leido=0")->fetch_assoc()['t'];
-    if ($no_leidos_menu > 0):
-    ?>
-    <span class="badge bg-danger ms-auto" style="font-size:10px"><?= $no_leidos_menu ?></span>
-    <?php endif; ?>
-</a>
+    <a href="/mensajes/index.php" class="<?= strpos($self,'mensajes')!==false?'active':'' ?>">
+        <i class="bi bi-chat-dots"></i> Mensajes
+        <?php
+        $db_menu = getDB();
+        $no_leidos_menu = $db_menu->query("SELECT COUNT(*) AS t FROM mensajes WHERE leido=0")->fetch_assoc()['t'];
+        if ($no_leidos_menu > 0):
+        ?>
+        <span class="badge bg-danger ms-auto" style="font-size:10px"><?= $no_leidos_menu ?></span>
+        <?php endif; ?>
+    </a>
 
-<?php if ($user['rol'] === 'administrador'): ?>
-<div class="nav-section">Administración</div>
-<a href="/minimarket/usuarios/index.php" class="<?= strpos($self,'usuarios')!==false?'active':'' ?>"><i class="bi bi-person-gear"></i> Usuarios</a>
-<?php endif; ?>
+    <?php if ($user['rol'] === 'administrador'): ?>
+    <div class="nav-section">Administración</div>
+    <a href="/usuarios/index.php" class="<?= strpos($self,'usuarios')!==false?'active':'' ?>"><i class="bi bi-person-gear"></i> Usuarios</a>
+    <?php endif; ?>
   </div>
 </div>
 
@@ -97,10 +95,9 @@ require_once __DIR__ . '/toast.php';
       <?php $badgeColor = match($user['rol']) { 'administrador'=>'bg-primary','gerente'=>'bg-warning text-dark',default=>'bg-success' }; ?>
       <span class="badge <?= $badgeColor ?> badge-rol"><?= ucfirst($user['rol']) ?></span>
       <span class="text-muted" style="font-size:13px;"><i class="bi bi-person-circle me-1"></i><?= htmlspecialchars($user['nombre']) ?></span>
-      <a href="/minimarket/logout.php" class="btn btn-outline-danger btn-sm"><i class="bi bi-box-arrow-right"></i></a>
+      <a href="/logout.php" class="btn btn-outline-danger btn-sm"><i class="bi bi-box-arrow-right"></i></a>
     </div>
   </div>
   <div class="content-area">
 
-<!-- TOAST SISTEMA -->
 <?php include __DIR__ . '/toast.php'; ?>

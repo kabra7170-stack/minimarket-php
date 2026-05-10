@@ -1,9 +1,21 @@
-FROM php:8.2-apache
+FROM php:8.2-fpm-alpine
 RUN docker-php-ext-install mysqli pdo pdo_mysql
-RUN rm -f /etc/apache2/mods-enabled/mpm_event.conf /etc/apache2/mods-enabled/mpm_event.load
+RUN apk add --no-cache nginx
 RUN rm -f /var/www/html/index.html
 COPY . /var/www/html/
 RUN echo '<meta http-equiv="refresh" content="0;url=/login.php">' > /var/www/html/index.html
 RUN chown -R www-data:www-data /var/www/html
+COPY <<EOF /etc/nginx/http.d/default.conf
+server {
+    listen 80;
+    root /var/www/html;
+    index login.php index.php;
+    location ~ \.php$ {
+        fastcgi_pass 127.0.0.1:9000;
+        fastcgi_param SCRIPT_FILENAME \$document_root\$fastcgi_script_name;
+        include fastcgi_params;
+    }
+}
+EOF
 EXPOSE 80
-CMD ["apache2-foreground"]
+CMD sh -c "php-fpm -D && nginx -g 'daemon off;'"

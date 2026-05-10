@@ -68,35 +68,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $st2->execute(); $st2->close();
         }
 
-        // Notificar a n8n
-// Obtener email del cliente
-$cliente_data = null;
-if ($cliente_id) {
-    $cliente_data = $db->query("SELECT nombre, email, telefono FROM clientes WHERE id=$cliente_id")->fetch_assoc();
-}
-
-$webhook_url = 'http://localhost:5678/webhook/pedido_nuevo';
-$payload = json_encode([
-    'pedido_id'  => $pedido_id,
-    'num_pedido' => $num,
-    'total'      => $total,
-    'tipo'       => $tipo,
-    'cliente'    => $cliente_data['nombre'] ?? 'Cliente General',
-    'email'      => $cliente_data['email'] ?? '',
-    'telefono'   => $cliente_data['telefono'] ?? '',
-]);
-$ch = curl_init($webhook_url);
-curl_setopt($ch, CURLOPT_POST, true);
-curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
-curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-curl_setopt($ch, CURLOPT_TIMEOUT, 5);
-$response = curl_exec($ch);
-$curl_error = curl_error($ch);
-curl_close($ch);
-
-file_put_contents('C:/Users/Deurys/Downloads/xampp/htdocs/webhook_debug.txt', date('Y-m-d H:i:s') . " | Response: $response | Error: $curl_error\n", FILE_APPEND);
-
 header("Location: ver.php?id=$pedido_id&ok=1");
 exit();
 

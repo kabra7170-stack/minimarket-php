@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 'telefono'   => $pedido['cliente_telefono'],
                 'fecha'      => $pedido['fecha'],
             ]);
-            $ch = curl_init('http://localhost:5678/webhook/pedido_nuevo');
+            $ch = curl_init('https://n8n-production-91d2.up.railway.app/webhook/pedido_nuevo');
             curl_setopt($ch, CURLOPT_POST, true);
             curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
             curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);

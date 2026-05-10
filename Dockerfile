@@ -4,5 +4,6 @@ RUN apt-get update && apt-get install -y apache2 php8.1 php8.1-mysql libapache2-
 RUN rm -rf /var/www/html/*
 COPY . /var/www/html/
 RUN chown -R www-data:www-data /var/www/html
+RUN echo "DirectoryIndex login.php index.php" >> /etc/apache2/apache2.conf
 CMD ["apache2ctl", "-D", "FOREGROUND"]
 EXPOSE 80

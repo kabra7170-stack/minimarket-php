@@ -7,6 +7,7 @@ if (isClienteLoggedIn()) { header('Location: catalogo.php'); exit(); }
 
 $error = $success = '';
 $modo  = $_GET['modo'] ?? 'login';
+$mostrarCarga = false;
 
 // ── LOGIN EMPLEADO ─────────────────────────────────────
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['accion'] ?? '') === 'login') {
@@ -22,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['accion'] ?? '') === 'login
             $_SESSION['nombre']     = $user['nombre'];
             $_SESSION['email']      = $user['email'];
             $_SESSION['rol']        = $user['rol'];
-            header('Location: dashboard.php'); exit();
+            $mostrarCarga = true; // ← mostrar pantalla de carga
         } else { $error = 'Correo o contraseña incorrectos.'; $modo = 'login'; }
     } else { $error = 'Completa todos los campos.'; $modo = 'login'; }
 }
@@ -112,9 +113,92 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['accion'] ?? '') === 'regis
   .divider { text-align:center; color:#9CA3AF; font-size:11px; margin:10px 0; position:relative; }
   .divider::before,.divider::after { content:''; position:absolute; top:50%; width:42%; height:1px; background:#E5E7EB; }
   .divider::before { left:0; } .divider::after { right:0; }
+
+  /* ── PANTALLA DE CARGA ── */
+  #splash-screen {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(135deg, #1F4E79 0%, #2E75B6 100%);
+    z-index: 9999;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 32px;
+  }
+  #splash-screen.active { display: flex; }
+
+  .splash-logo {
+    width: 150px;
+    height: 150px;
+    border-radius: 28px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    animation: splashPop 0.6s cubic-bezier(0.34,1.56,0.64,1) forwards;
+    opacity: 0;
+  }
+  @keyframes splashPop {
+    from { opacity:0; transform: scale(0.5); }
+    to   { opacity:1; transform: scale(1); }
+  }
+
+  .splash-title {
+    color: #fff;
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    animation: fadeUp 0.6s ease 0.3s forwards;
+    opacity: 0;
+  }
+  .splash-subtitle {
+    color: rgba(255,255,255,0.7);
+    font-size: 13px;
+    margin-top: -20px;
+    animation: fadeUp 0.6s ease 0.5s forwards;
+    opacity: 0;
+  }
+  @keyframes fadeUp {
+    from { opacity:0; transform: translateY(16px); }
+    to   { opacity:1; transform: translateY(0); }
+  }
+
+  .splash-bar-container {
+    width: 260px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 50px;
+    height: 6px;
+    overflow: hidden;
+    animation: fadeUp 0.6s ease 0.6s forwards;
+    opacity: 0;
+  }
+  .splash-bar {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #F5A623, #FFD166);
+    border-radius: 50px;
+    transition: width 0.1s linear;
+  }
+  .splash-percent {
+    color: rgba(255,255,255,0.8);
+    font-size: 12px;
+    font-weight: 600;
+    animation: fadeUp 0.6s ease 0.7s forwards;
+    opacity: 0;
+  }
 </style>
 </head>
 <body>
+
+<!-- ── PANTALLA DE CARGA ── -->
+<div id="splash-screen" <?= $mostrarCarga ? 'class="active"' : '' ?>>
+  <img src="uploads/icon-192 .png" class="splash-logo" alt="Logo MiniMarket G2" onerror="this.style.display='none'">
+  <div class="splash-title">MiniMarket G2</div>
+  <div class="splash-subtitle">Cargando el sistema...</div>
+  <div class="splash-bar-container">
+    <div class="splash-bar" id="splashBar"></div>
+  </div>
+  <div class="splash-percent" id="splashPercent">0%</div>
+</div>
+
 <div class="card-auth">
   <div class="auth-header">
     <i class="bi bi-shop"></i>
@@ -250,6 +334,29 @@ function switchTab(tab) {
     el.classList.toggle('active', ['login','cliente','registro'][i]===tab);
   });
 }
+
+// ── PANTALLA DE CARGA ──
+<?php if ($mostrarCarga): ?>
+(function() {
+  const bar     = document.getElementById('splashBar');
+  const percent = document.getElementById('splashPercent');
+  let   progress = 0;
+
+  const interval = setInterval(() => {
+    progress += Math.random() * 4 + 1;
+    if (progress >= 100) {
+      progress = 100;
+      bar.style.width = '100%';
+      percent.textContent = '100%';
+      clearInterval(interval);
+      setTimeout(() => { window.location.href = 'dashboard.php'; }, 400);
+    } else {
+      bar.style.width = progress + '%';
+      percent.textContent = Math.floor(progress) + '%';
+    }
+  }, 60);
+})();
+<?php endif; ?>
 </script>
 </body>
 </html>

@@ -36,6 +36,14 @@ require_once __DIR__ . '/toast.php';
   table thead { background:#F8FAFC; }
   .alert-mini { background:#FFF3CD; border-left:4px solid #F59E0B; border-radius:4px; padding:8px 12px; font-size:13px; }
 </style>
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#1F4E79">
+<link rel="apple-touch-icon" href="/uploads/icon-192.png">
+<script>
+if('serviceWorker' in navigator){
+  navigator.serviceWorker.register('/service-worker.js');
+}
+</script>
 </head>
 <body>
 

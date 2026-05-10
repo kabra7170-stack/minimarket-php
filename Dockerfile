@@ -7,7 +7,7 @@ RUN echo '<meta http-equiv="refresh" content="0;url=/login.php">' > /var/www/htm
 RUN chown -R www-data:www-data /var/www/html
 COPY <<EOF /etc/nginx/http.d/default.conf
 server {
-    listen 80;
+    listen \${PORT:-80};
     root /var/www/html;
     index login.php index.php;
     location / {

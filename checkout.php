@@ -69,7 +69,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stP->execute();
             $pedido_id = $stP->insert_id;
             $stP->close();
-
+            // Detalle pedido
+            foreach ($items as $it) {
+             $stPD = $db->prepare("INSERT INTO detalle_pedidos (pedido_id,producto_id,cantidad,precio_unitario,subtotal) VALUES (?,?,?,?,?)");
+             $stPD->bind_param('iiidd', $pedido_id, $it['id'], $it['qty'], $it['precio_venta'], $it['total_item']);
+              $stPD->execute(); $stPD->close();
+              }
             // Info domicilio
             $stD = $db->prepare("INSERT INTO pedidos_domicilio (pedido_id,direccion,telefono,referencia,costo_envio) VALUES (?,?,?,?,?)");
             $stD->bind_param('isssd', $pedido_id, $direccion, $telefono, $referencia, $envio);

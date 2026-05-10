@@ -1,6 +1,6 @@
 FROM php:8.2-apache
 RUN docker-php-ext-install mysqli pdo pdo_mysql
-RUN sed -i 's/^LoadModule mpm_event/\#LoadModule mpm_event/' /etc/apache2/mods-enabled/mpm_event.conf 2>/dev/null || true
+RUN rm -f /etc/apache2/mods-enabled/mpm_event.conf /etc/apache2/mods-enabled/mpm_event.load
 RUN rm -f /var/www/html/index.html
 COPY . /var/www/html/
 RUN echo '<meta http-equiv="refresh" content="0;url=/login.php">' > /var/www/html/index.html

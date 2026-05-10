@@ -5,6 +5,7 @@ RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
 RUN echo "DirectoryIndex login.php index.php" >> /etc/apache2/apache2.conf
 RUN rm -rf /var/www/html/*
 COPY . /var/www/html/
+RUN find /var/www/html -name "index.html" -delete
 RUN chown -R www-data:www-data /var/www/html
 CMD ["apache2ctl", "-D", "FOREGROUND"]
 EXPOSE 80

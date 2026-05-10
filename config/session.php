@@ -1,4 +1,6 @@
 <?php
+ini_set('session.cookie_secure', 1);
+ini_set('session.cookie_samesite', 'None');
 if (session_status() === PHP_SESSION_NONE) session_start();
 
 // ── EMPLEADOS ──────────────────────────────────────────
